@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>
+  /* TODO: :root variables — --primary, --accent, --bg, --text, --radius */
+  :root {
+    --primary: #2563eb;
+    --accent: #3b82f6;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text: #0f172a;
+    --border: #e2e8f0;
+    --radius: 12px;
+    --shadow: rgba(0, 0, 0, 0.05);
+  }
+
+  /* TODO: * reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* TODO: body styles */
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    margin-bottom: 24px;
+    font-size: 2rem;
+    color: var(--primary);
+  }
+
+  /* TODO: .grid — display:grid, 1 column base, gap */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* TODO: @media (min-width: 640px) — 3 columns */
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* TODO: .card — border, padding, radius, transition */
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* TODO: .card:hover — lift effect */
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 20px var(--shadow);
+    border-color: var(--accent);
+  }
+
+  /* TODO: .card[data-icon]::before — content using attr() */
+  /* Hint: content: attr(data-icon) ' '; font-size: 2rem; display: block; */
+  .card[data-icon]::before {
+    content: attr(data-icon) ' ';
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  /* TODO: dark mode @media */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary: #3b82f6;
+      --accent: #60a5fa;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --border: #334155;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+  }
+</style>
+</head>
+<body>
+  <h1>My Skills</h1>
+  <div class="grid">
+    <div class="card" data-icon="🌐">HTML5 — Structuring</div>
+    <div class="card" data-icon="🎨">CSS3 — Styling</div>
+    <div class="card" data-icon="⚡">JavaScript — Behavioural</div>
+    <div class="card" data-icon="📐">Flexbox — 1D Layout</div>
+    <div class="card" data-icon="🗂">Grid — 2D Layout</div>
+    <div class="card" data-icon="📱">Responsive — For Any Screen</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My CSS Portfolio</title>
+  <style>
+    /* 1. Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 2. Base styles (body, a, h1-h3, p) */
+    body {
+      font-family: sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3 {
+      font-weight: bold;
+    }
+
+    p {
+      color: #64748b;
+    }
+
+    /* 3. Navigation (.nav, .nav-logo, .nav-links, .nav-links a) */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0f172a;
+      color: white;
+      padding: 16px 32px;
+    }
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    /* 4. Hero section (.hero, .hero h1, .hero p, .btn) */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: white;
+    }
+
+    .hero p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #38bdf8;
+      color: #0f172a;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #7dd3fc;
+    }
+
+    /* 5. Skills grid (.skills-section, .skills-grid, .skill-card) */
+    .skills-section {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .skills-section h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #0f172a;
+    }
+
+    .skills-grid {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .skill-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      flex: 1;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      text-align: left;
+    }
+
+    .skill-card h3 {
+      color: #0284c7;
+      margin-bottom: 8px;
+      font-size: 1.15rem;
+    }
+
+    .skill-card p {
+      font-size: 0.95rem;
+    }
+
+    /* 6. Footer (.footer) */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: #64748b;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+      background: white;
+      margin-top: 80px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <span class="nav-logo">My Gachon Portfolio</span>
+    <div class="nav-links">
+      <a href="#skills">My Skills</a>
+      <a href="#contact">Contact Me</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Hello, I am Learning CSS!</h1>
+    <p>Week 3-2 · Introduction to CSS · Gachon University</p>
+    <a href="#skills" class="btn">Click Here to See My Skills</a>
+  </section>
+
+  <section class="skills-section" id="skills">
+    <h2>What do I Know?</h2>
+    <div class="skills-grid">
+      <div class="skill-card"><h3>HTML5</h3><p>Structure and semantics</p></div>
+      <div class="skill-card"><h3>CSS3</h3><p>Styling/layout</p></div>
+      <div class="skill-card"><h3>Flexbox</h3><p>Modern layout model</p></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>K0126002 Web Programming &copy; 2026, Gachon University</p>
+  </footer>
+</body>
+</html>

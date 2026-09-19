@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>My CSS Advanced Page</title>
+<style>
+  /* 1. :root variables + dark mode */
+  :root {
+    --bg: #f8fafc;
+    --text: #0f172a;
+    --nav-bg: rgba(255, 255, 255, 0.85);
+    --card-bg: #ffffff;
+    --primary: #2563eb;
+    --accent: #3b82f6;
+    --border: #e2e8f0;
+    --shadow: rgba(0, 0, 0, 0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #f8fafc;
+      --nav-bg: rgba(15, 23, 42, 0.85);
+      --card-bg: #1e293b;
+      --primary: #3b82f6;
+      --accent: #60a5fa;
+      --border: #334155;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding-top: 60px; /* Space for fixed nav */
+  }
+
+  /* 2. Fixed nav */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+  }
+
+  nav span {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--primary);
+  }
+
+  nav div a {
+    color: var(--text);
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+  }
+
+  nav div a:hover {
+    color: var(--primary);
+  }
+
+  /* 3. @keyframes fadeIn + hero */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero {
+    text-align: center;
+    padding: 100px 20px 80px;
+    animation: fadeIn 1s ease-out;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    color: var(--primary);
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+  }
+
+  /* 4. Responsive grid with ::before icons + hover */
+  .skills-section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  /* 5. Sticky section headings */
+  .sticky-h2 {
+    position: sticky;
+    top: 60px; /* Sits right below fixed nav */
+    background: var(--bg);
+    padding: 16px 0;
+    margin-bottom: 24px;
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--border);
+    z-index: 10;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile default */
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr); /* 3 col desktop */
+    }
+  }
+
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card::before {
+    content: attr(data-icon);
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 20px var(--shadow);
+    border-color: var(--accent);
+  }
+</style>
+</head>
+<body>
+  <nav>
+    <span>Goh Qi Long Jaren</span>
+    <div><a href="#">Home</a> <a href="#">My Skills</a></div>
+  </nav>
+
+  <section class="hero">
+    <h1>Hello, I am Goh Qi Long Jaren</h1>
+    <p>Computer Engineering · Gachon University · Week 3 Advanced CSS</p>
+  </section>
+
+  <section class="skills-section">
+    <h2 class="sticky-h2">My Web Programming Skills</h2>
+    <div class="grid">
+      <div class="card" data-icon="🌐">HTML5</div>
+      <div class="card" data-icon="🎨">CSS3</div>
+      <div class="card" data-icon="⚡">JavaScript</div>
+    </div>
+  </section>
+</body>
+</html>

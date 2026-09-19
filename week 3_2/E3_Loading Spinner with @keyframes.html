@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<style>
+  body { display: flex; justify-content: center;
+         align-items: center; height: 200px; background: #fff7ed; }
+
+  @keyframes turn {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 5px solid #ffedd5;
+    border-right-color: #ea580c;
+    animation: turn 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+</style>
+</head>
+<body>
+  <div class="spinner"></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+<style>
+  /* TODO: declare :root variables */
+  :root {
+    --primary: #2563eb;
+    --accent: #93c5fd;
+    --bg: #f3f4f6;
+    --text: #111827;
+    --radius: 8px;
+  }
+
+  /* TODO: dark mode media query */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111827;
+      --text: #f3f4f6;
+    }
+  }
+
+  body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 20px; }
+
+  .btn {
+    /* TODO: use var(--primary) for background */
+    background: var(--primary);
+    border-radius: var(--radius);
+    color: white; border: none; padding: 10px 20px; cursor: pointer;
+  }
+  .card {
+    /* TODO: use variables for background, border, border-radius */
+    background: var(--accent);
+    border-radius: var(--radius);
+    padding: 20px; margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+  <button class="btn">Click Me</button>
+  <div class="card">A themed card using CSS variables</div>
+</body>
+</html>
