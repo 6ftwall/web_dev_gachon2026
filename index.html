@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A collection of web development lessons and exercises, organized by week.">
+  <title>Web Studies — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #20362f;
+      --muted: #69756e;
+      --paper: #f3f3eb;
+      --white: #fffefa;
+      --line: #dedfd4;
+      --green: #315f4b;
+      --lime: #d4ed72;
+      --coral: #e68163;
+      --mono: "DM Mono", monospace;
+      --sans: "DM Sans", sans-serif;
+      --serif: "Fraunces", Georgia, serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+
+    .topbar {
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 5.2%;
+      background: var(--ink);
+      color: var(--white);
+    }
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .mark {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      background: var(--lime);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 17px;
+    }
+    .top-note {
+      color: #c2ccc2;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .intro {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 28px;
+      padding: 41px 5.2% 37px;
+      border-bottom: 1px solid var(--line);
+      background-color: #e9eee2;
+      background-image: radial-gradient(#bbc9b7 0.7px, transparent 0.7px);
+      background-position: right 22px top 15px;
+      background-size: 16px 16px;
+    }
+    .intro-copy { position: relative; max-width: 740px; }
+    .eyebrow, .section-label {
+      margin: 0;
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 9px 0 9px;
+      font-family: var(--serif);
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 500;
+      line-height: 1.04;
+    }
+    .intro-copy > p:last-child {
+      max-width: 520px;
+      margin: 0;
+      color: #52635a;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .total {
+      position: relative;
+      min-width: 150px;
+      padding: 15px 18px 13px;
+      border-left: 2px solid var(--coral);
+      background: var(--white);
+    }
+    .total strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 35px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .total span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .workspace { padding: 0 5.2% 44px; }
+    .week-nav {
+      display: flex;
+      align-items: stretch;
+      gap: 5px;
+      padding: 17px 0 13px;
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+    }
+    .week-button {
+      position: relative;
+      flex: 0 0 auto;
+      min-width: 145px;
+      padding: 10px 14px 11px;
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color .18s ease, border-color .18s ease;
+    }
+    .week-button:hover:not(:disabled) { background: #e9ebe1; }
+    .week-button[aria-selected="true"] {
+      border-color: var(--line);
+      background: var(--white);
+    }
+    .week-button[aria-selected="true"]::after {
+      position: absolute;
+      right: 10px;
+      bottom: -1px;
+      left: 10px;
+      height: 2px;
+      background: var(--coral);
+      content: "";
+    }
+    .week-name { display: block; font-size: 12px; font-weight: 700; }
+    .week-meta {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+    .week-button:disabled { color: #7d867e; cursor: default; opacity: .72; }
+
+    .desk {
+      display: grid;
+      grid-template-columns: minmax(265px, 330px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+      padding-top: 18px;
+    }
+    .catalog, .preview { min-width: 0; }
+    .catalog-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 0 1px 12px;
+    }
+    .catalog-count {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+    .search-wrap { position: relative; margin-bottom: 10px; }
+    .search-wrap::before {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      width: 11px;
+      height: 11px;
+      border: 1.5px solid #748078;
+      border-radius: 50%;
+      content: "";
+    }
+    .search-wrap::after {
+      position: absolute;
+      top: 21px;
+      left: 23px;
+      width: 5px;
+      height: 1.5px;
+      background: #748078;
+      content: "";
+      transform: rotate(45deg);
+      transform-origin: left;
+    }
+    .search {
+      width: 100%;
+      height: 36px;
+      padding: 0 12px 0 34px;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      outline: none;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 11px;
+    }
+    .search:focus { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+    .lesson-list {
+      max-height: min(60vh, 640px);
+      overflow: auto;
+      border-top: 1px solid var(--line);
+      scrollbar-color: #aeb9ab transparent;
+      scrollbar-width: thin;
+    }
+    .lesson-button {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 27px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 8px 10px 8px 4px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color .15s ease;
+    }
+    .lesson-button:hover { background: #e9ebe1; }
+    .lesson-button[aria-current="true"] { background: #e3eadc; }
+    .lesson-number {
+      color: #929b91;
+      font-family: var(--mono);
+      font-size: 9px;
+      text-align: center;
+    }
+    .lesson-title {
+      overflow: hidden;
+      color: #31443a;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.4;
+      text-overflow: ellipsis;
+    }
+    .lesson-kind {
+      padding: 3px 5px;
+      color: #65736b;
+      background: #e5e8de;
+      font-family: var(--mono);
+      font-size: 8px;
+      text-transform: uppercase;
+    }
+    .empty-state { padding: 19px 5px; color: var(--muted); font-size: 12px; }
+
+    .preview-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 61px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-bottom: 0;
+      background: var(--white);
+    }
+    .preview-details { min-width: 0; }
+    .preview-details .section-label { font-size: 9px; }
+    .preview-title {
+      overflow: hidden;
+      margin: 3px 0 0;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .open-link {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: border-color .15s ease, background-color .15s ease;
+    }
+    .open-link:hover { border-color: var(--green); background: #edf0e8; }
+    .open-link svg { width: 13px; height: 13px; }
+    .frame-shell {
+      position: relative;
+      height: clamp(470px, 67vh, 760px);
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+    .frame-shell iframe { width: 100%; height: 100%; border: 0; background: white; }
+    .preview-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: var(--white);
+      text-align: center;
+    }
+    .placeholder-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 14px;
+      background: var(--lime);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 25px;
+    }
+    .preview-placeholder p { max-width: 275px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .preview-placeholder[hidden] { display: none; }
+    .footnote {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 18px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 760px) {
+      .topbar { min-height: 58px; padding: 0 5%; }
+      .top-note { font-size: 8px; text-align: right; }
+      .intro { grid-template-columns: 1fr; gap: 19px; padding: 30px 5% 25px; }
+      .total { width: max-content; min-width: 130px; padding: 10px 13px; }
+      .total strong { font-size: 28px; }
+      .workspace { padding: 0 5% 30px; }
+      .desk { grid-template-columns: minmax(0, 1fr); gap: 17px; padding-top: 14px; }
+      .lesson-list { max-height: 280px; }
+      .frame-shell { height: 64vh; min-height: 430px; }
+    }
+    @media (max-width: 420px) {
+      .top-note { max-width: 130px; line-height: 1.5; }
+      .week-button { min-width: 128px; padding-right: 10px; padding-left: 10px; }
+      .preview-head { padding: 9px; }
+      .open-link { gap: 5px; padding: 0 7px; font-size: 9px; }
+      .footnote { flex-direction: column; gap: 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="Web Studies home"><span class="mark" aria-hidden="true">W</span> WEB STUDIES</a>
+    <span class="top-note">Learning archive <span aria-hidden="true">/</span> 2026</span>
+  </header>
+
+  <main id="top">
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="eyebrow">Web programming · Gachon University</p>
+        <h1 id="page-title">A semester on the web.</h1>
+        <p>From meaningful HTML to responsive CSS, a collection of lessons and hands-on exercises, gathered in one place.</p>
+      </div>
+      <div class="total" aria-label="88 lessons across 3 weeks">
+        <strong id="total-count">88</strong>
+        <span>lessons · 3 weeks</span>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Lesson portfolio">
+      <nav class="week-nav" id="week-nav" role="tablist" aria-label="Choose a week"></nav>
+      <div class="desk">
+        <aside class="catalog" aria-label="Lessons">
+          <div class="catalog-head">
+            <h2 class="section-label" id="catalog-heading">Week 2.2</h2>
+            <span class="catalog-count" id="catalog-count"></span>
+          </div>
+          <label class="search-wrap">
+            <span hidden>Search lessons</span>
+            <input class="search" id="search" type="search" placeholder="Find a lesson" autocomplete="off">
+          </label>
+          <div class="lesson-list" id="lesson-list" role="listbox" aria-label="Choose a lesson"></div>
+        </aside>
+
+        <section class="preview" aria-label="Lesson preview">
+          <div class="preview-head">
+            <div class="preview-details">
+              <p class="section-label" id="preview-week">Select a lesson</p>
+              <h2 class="preview-title" id="preview-title">Rendered page preview</h2>
+            </div>
+            <a class="open-link" id="open-link" href="#" target="_blank" rel="noopener" hidden>
+              Open page
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3h7v7M13 3 6.5 9.5M11 9v4H3V5h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+          <div class="frame-shell">
+            <iframe id="lesson-frame" title="Selected lesson rendered preview"></iframe>
+            <div class="preview-placeholder" id="preview-placeholder">
+              <div>
+                <span class="placeholder-mark" aria-hidden="true">W</span>
+                <p>Choose a lesson to see the finished page here.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer class="footnote">
+        <span>HTML · CSS · Creative practice</span>
+        <span>88 pages, one learning journey</span>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    const weeks = [
+      {
+        label: "Week 2.2",
+        subject: "Semantic HTML",
+        folder: "week 2_2",
+        files: [
+          "E1_Convert Div Soup to Semantic HTML.html",
+          "E2_Blog Article with header & footer.html",
+          "E3_Figure, figcaption & time.html",
+          "E4_FAQ with details & summary.html",
+          "E5_Full Semantic Portfolio Page.html",
+          "E6_Fix_Sementic_Errors.html",
+          "E7_Quotation_&citation_page.html",
+          "E8_News_Article_All_Semantic_Elements.html",
+          "topic_01_What_is_semantic_HTML.html",
+          "topic_02_page_and_section_header.html",
+          "topic_03_navigation_landmark.html",
+          "topic_04_the_main_content.html",
+          "topic_05_page_and_section_footer.html",
+          "topic_06_thematic_grouping.html",
+          "topic_07_self_contained_content.html",
+          "topic_08_tangentially_related_content.html",
+          "topic_09_the_non_semantic_container.html",
+          "topic_10_self_contained_figure.html",
+          "topic_11_caption_for_figure.html",
+          "topic_12_machine_readable_dates.html",
+          "topic_13_contact_information.html",
+          "topic_14_highlighted_text.html",
+          "topic_15_abbreviations.html",
+          "topic_16_block_quotations.html",
+          "topic_17_Inline_Quotation.html",
+          "topic_18_title_of_a_work.html",
+          "topic_19_Inline_Code.html",
+          "topic_20_Preformatted_Text.html",
+          "topic_21_Disclosure_Widget.html",
+          "topic_22_Popup_modal.html",
+          "topic_23_ARIA_Role_Attribute.html",
+          "topic_24_Semantic_Landmarks_and_Accessibility.html",
+          "topic_25_Complete_Semantic_Page_All_Together.html"
+        ]
+      },
+      {
+        label: "Week 3.1",
+        subject: "CSS Foundations",
+        folder: "week 3_1",
+        files: [
+          "E1_Style_Your_First_Heading.html",
+          "E2_Three_Ways_Spot_The_Difference.html",
+          "E3_Color_Palette_Card.html",
+          "E4_Box_Model_Explorer.html",
+          "E5_Fix_The_Broken_CSS.html",
+          "E6_Flexbox_Navigation_Bar.html",
+          "E7_Profile_Card_With_CSS.html",
+          "E8_Full_Style_Sheet_From_Scratch.html",
+          "topic_01_What_Is_CSS.html",
+          "topic_02_Three_Ways_to_Add_CSS.html",
+          "topic_03_CSS_Syntax.html",
+          "topic_04_The_Universal_Selector.html",
+          "topic_05_ID_Selector.html",
+          "topic_06_Class_Selector.html",
+          "topic_07_Type_Element_Selector.html",
+          "topic_08_The_Color_Property.html",
+          "topic_09_Background-Color_Property.html",
+          "topic_10_Hex_Color_Codes.html",
+          "topic_11_RGB_Color_Values.html",
+          "topic_12_font-size_property.html",
+          "topic_13_font-weight_property.html",
+          "topic_14_font-style_property.html",
+          "topic_15_text-align_Property.html",
+          "topic_16_Box_Model_Padding.html",
+          "topic_17_Box_Model_Margin.html",
+          "topic_18_Box_Model_Width_Calculation.html",
+          "topic_19_display_block.html",
+          "topic_20_Display_None.html",
+          "topic_21_display_Flex.html",
+          "topic_22_CSS_Specificity.html",
+          "topic_23_Which_Selector_Wins.html",
+          "topic_24_CSS_Comments.html",
+          "topic_25_Putting_It_All_Together.html"
+        ]
+      },
+      {
+        label: "Week 3.2",
+        subject: "Advanced CSS",
+        folder: "week 3_2",
+        files: [
+          "E1_Position the Badge.html",
+          "E2_Hover Card with Translation.html",
+          "E3_Loading Spinner with @keyframes.html",
+          "E4_CSS Variables Theme.html",
+          "E5_Fixed_Nav_Bar.html",
+          "E6_Responsive_Grid_page.html",
+          "E7_Complete_CSS_Advanced_Portfolio_Page.html",
+          "topic_01_position_static_&_relative.html",
+          "topic_02_position_absolute.html",
+          "topic_03_position_fixed_and_sticky.html",
+          "topic_04_z-index_&_overflow.html",
+          "topic_05_Pseudo-classes.html",
+          "topic_06_Pseudo-elements_before_&_after.html",
+          "topic_07_CSS_Transitions.html",
+          "topic_08_CSS_Animations_&_keyframes.html",
+          "topic_09_CSS_Custom_Properties_(Variables).html",
+          "topic_10_CSS_Media_Queries.html",
+          "topic_11_Advanced_Flexbox.html",
+          "topic_12_CSS_Grid.html",
+          "topic_13_border-radius_&_box-shadow.html",
+          "topic_14_The_CSS_Inherit_Keyword.html",
+          "topic_15_Putting_CSS_Advanced_Together.html"
+        ]
+      },
+      {
+        label: "Week 4.1",
+        subject: "Coming soon",
+        folder: "week 4_1",
+        files: []
+      }
+    ];
+
+    const weekNav = document.querySelector("#week-nav");
+    const lessonList = document.querySelector("#lesson-list");
+    const search = document.querySelector("#search");
+    const frame = document.querySelector("#lesson-frame");
+    const placeholder = document.querySelector("#preview-placeholder");
+    const openLink = document.querySelector("#open-link");
+    let activeWeek = 0;
+    let activeFile = weeks[0].files[0];
+
+    const getTitle = (file) => file
+      .replace(/\.html$/i, "")
+      .replace(/^(?:E\d+_|topic_\d+_)/i, "")
+      .replace(/[_-]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const isExercise = (file) => /^E\d+_/i.test(file);
+
+    function renderWeeks() {
+      weekNav.replaceChildren();
+      weeks.forEach((week, index) => {
+        const button = document.createElement("button");
+        button.className = "week-button";
+        button.type = "button";
+        button.role = "tab";
+        button.id = `week-tab-${index}`;
+        button.setAttribute("aria-selected", String(index === activeWeek));
+        button.setAttribute("aria-controls", "lesson-list");
+        button.tabIndex = index === activeWeek ? 0 : -1;
+
+        const name = document.createElement("span");
+        name.className = "week-name";
+        name.textContent = week.label;
+        const meta = document.createElement("span");
+        meta.className = "week-meta";
+        meta.textContent = week.files.length ? `${week.subject} · ${week.files.length} pages` : week.subject;
+        button.append(name, meta);
+        button.addEventListener("click", () => selectWeek(index));
+        weekNav.append(button);
+      });
+    }
+
+    function renderLessons() {
+      const week = weeks[activeWeek];
+      const query = search.value.trim().toLocaleLowerCase();
+      const matches = week.files.filter((file) => getTitle(file).toLocaleLowerCase().includes(query));
+      document.querySelector("#catalog-heading").textContent = week.label;
+      document.querySelector("#catalog-count").textContent = `${matches.length} / ${week.files.length}`;
+      lessonList.replaceChildren();
+
+      if (!matches.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = week.files.length ? "No lessons match your search." : "Lessons for this week have not been added yet.";
+        lessonList.append(empty);
+        return;
+      }
+
+      matches.forEach((file) => {
+        const button = document.createElement("button");
+        button.className = "lesson-button";
+        button.type = "button";
+        button.role = "option";
+        button.setAttribute("aria-selected", String(file === activeFile));
+        if (file === activeFile) button.setAttribute("aria-current", "true");
+
+        const number = document.createElement("span");
+        number.className = "lesson-number";
+        number.textContent = String(week.files.indexOf(file) + 1).padStart(2, "0");
+        const title = document.createElement("span");
+        title.className = "lesson-title";
+        title.textContent = getTitle(file);
+        const kind = document.createElement("span");
+        kind.className = "lesson-kind";
+        kind.textContent = isExercise(file) ? "Build" : "Learn";
+        button.append(number, title, kind);
+        button.addEventListener("click", () => selectLesson(file));
+        lessonList.append(button);
+      });
+    }
+
+    function selectWeek(index) {
+      activeWeek = index;
+      activeFile = "";
+      search.value = "";
+      renderWeeks();
+      renderLessons();
+      document.querySelector("#preview-week").textContent = weeks[index].subject;
+      document.querySelector("#preview-title").textContent = "Choose a lesson to preview";
+      frame.removeAttribute("src");
+      openLink.hidden = true;
+      placeholder.hidden = false;
+    }
+
+    function selectLesson(file) {
+      const week = weeks[activeWeek];
+      const path = `${week.folder}/${file}`;
+      activeFile = file;
+      document.querySelector("#preview-week").textContent = `${week.label} · ${isExercise(file) ? "Exercise" : "Topic"}`;
+      document.querySelector("#preview-title").textContent = getTitle(file);
+      frame.src = encodeURI(path);
+      frame.title = `${getTitle(file)} rendered preview`;
+      openLink.href = encodeURI(path);
+      openLink.hidden = false;
+      placeholder.hidden = true;
+      renderLessons();
+    }
+
+    document.querySelector("#total-count").textContent = weeks.reduce((total, week) => total + week.files.length, 0);
+    document.querySelector(".total").setAttribute("aria-label", `${document.querySelector("#total-count").textContent} lessons across 3 populated weeks`);
+    search.addEventListener("input", renderLessons);
+    renderWeeks();
+    renderLessons();
+    selectLesson(activeFile);
+  </script>
+</body>
+</html>

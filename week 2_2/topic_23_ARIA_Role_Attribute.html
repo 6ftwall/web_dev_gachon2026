@@ -1,0 +1,22 @@
+<!-- 1. Native HTML — role is implicit, no attribute needed -->
+<button>Submit</button>        <!-- role="button" is automatic -->
+<nav>...</nav>                 <!-- role="navigation" is automatic -->
+<main>...</main>               <!-- role="main" is automatic -->
+
+<!-- 2. ARIA role — only when native element does not exist -->
+<!-- Custom tab widget (no native tab element in HTML) -->
+<div role="tablist">
+  <div role="tab" aria-selected="true">HTML</div>
+  <div role="tab" aria-selected="false">CSS</div>
+</div>
+<div role="tabpanel">
+  <p>HTML content here...</p>
+</div>
+
+<!-- Live region: screen reader announces changes immediately -->
+<div role="alert" id="status">
+  <!-- JS updates this text; screen reader reads it aloud -->
+</div>
+
+<!-- Never: adding role to a native element redundantly -->
+<!-- <nav role="navigation"> ← redundant, not wrong but unnecessary -->

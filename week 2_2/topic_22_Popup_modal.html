@@ -1,0 +1,25 @@
+<!-- HTML -->
+<button onclick="document.getElementById('confirm').showModal()">
+  Delete Account
+</button>
+
+<dialog id="confirm">
+  <h2>Confirm Deletion</h2>
+  <p>This action cannot be undone.
+     Are you sure you want to delete your account?</p>
+
+  <!-- form method="dialog" closes the dialog on submit -->
+  <form method="dialog">
+    <button value="cancel">Cancel</button>
+    <button value="delete">Yes, Delete</button>
+  </form>
+</dialog>
+
+<script>
+  const dlg = document.getElementById('confirm');
+  dlg.addEventListener('close', function() {
+    if (dlg.returnValue === 'delete') {
+      alert('Account deleted (demo only)');
+    }
+  });
+</script>
