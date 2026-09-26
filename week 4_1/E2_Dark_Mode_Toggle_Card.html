@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile Card - Dark Mode Toggle</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f3f4f6;
+    }
+
+    .card {
+      width: 320px;
+      padding: 28px;
+      border-radius: 16px;
+      background-color: #ffffff;
+      color: #111827;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .card.dark {
+      background-color: #1f2937;
+      color: #f9fafb;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #2563eb;
+      color: #ffffff;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="card" class="card">
+    <h2>Jane Doe</h2>
+    <p>Frontend Developer & UI Specialist</p>
+    <button id="toggle-btn">🌙 Dark Mode</button>
+  </div>
+
+  <script>
+    const card = document.querySelector('#card');
+    const btn = document.querySelector('#toggle-btn');
+
+    btn.addEventListener('click', () => {
+      card.classList.toggle('dark');
+      if (card.classList.contains('dark')) {
+        btn.textContent = '☀️ Light Mode';
+      } else {
+        btn.textContent = '🌙 Dark Mode';
+      }
+    });
+  </script>
+
+</body>
+</html>

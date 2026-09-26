@@ -396,9 +396,9 @@
         <h1 id="page-title">A semester on the web.</h1>
         <p>From meaningful HTML to responsive CSS, a collection of lessons and hands-on exercises, gathered in one place.</p>
       </div>
-      <div class="total" aria-label="88 lessons across 3 weeks">
-        <strong id="total-count">88</strong>
-        <span>lessons · 3 weeks</span>
+      <div class="total" aria-label="Lesson count">
+        <strong id="total-count">104</strong>
+        <span id="total-label">lessons · 4 weeks</span>
       </div>
     </section>
 
@@ -559,9 +559,26 @@
       },
       {
         label: "Week 4.1",
-        subject: "Coming soon",
+        subject: "JavaScript & the DOM",
         folder: "week 4_1",
-        files: []
+        files: [
+          "E1_Click_Counter_with_Color_Change.html",
+          "E2_Dark_Mode_Toggle_Card.html",
+          "E3_Interactive_Todo_List.html",
+          "E4_Event_Delegation.html",
+          "topic_01_What_is_the_DOM.doc",
+          "topic_02_Selecting_Elements.js",
+          "topic_03_Query_Selector.js",
+          "topic_04_textContent.js",
+          "topic_05_innerHTML.js",
+          "topic_06_classList.js",
+          "topic_07_addEventListener.js",
+          "topic_08_The_Event_Object.js",
+          "topic_09_preventDefault.js",
+          "topic_10_Bubbling_And_Delegation.js",
+          "topic_11_createElement_and_appendChild.js",
+          "topic_12_Removing_Elements.js"
+        ]
       }
     ];
 
@@ -575,7 +592,7 @@
     let activeFile = weeks[0].files[0];
 
     const getTitle = (file) => file
-      .replace(/\.html$/i, "")
+      .replace(/\.(?:html|js|doc)$/i, "")
       .replace(/^(?:E\d+_|topic_\d+_)/i, "")
       .replace(/[_-]+/g, " ")
       .replace(/\s+/g, " ")
@@ -600,7 +617,7 @@
         name.textContent = week.label;
         const meta = document.createElement("span");
         meta.className = "week-meta";
-        meta.textContent = week.files.length ? `${week.subject} · ${week.files.length} pages` : week.subject;
+        meta.textContent = `${week.subject} · ${week.files.length} lessons`;
         button.append(name, meta);
         button.addEventListener("click", () => selectWeek(index));
         weekNav.append(button);
@@ -662,19 +679,36 @@
     function selectLesson(file) {
       const week = weeks[activeWeek];
       const path = `${week.folder}/${file}`;
+      const isPage = /\.html$/i.test(file);
       activeFile = file;
       document.querySelector("#preview-week").textContent = `${week.label} · ${isExercise(file) ? "Exercise" : "Topic"}`;
       document.querySelector("#preview-title").textContent = getTitle(file);
-      frame.src = encodeURI(path);
+      if (isPage) {
+        frame.removeAttribute("srcdoc");
+        frame.src = encodeURI(path);
+      } else {
+        const title = getTitle(file).replace(/[&<>"']/g, (character) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        })[character]);
+        frame.removeAttribute("src");
+        frame.srcdoc = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:#f3f3eb;color:#20362f;font:15px "DM Sans",sans-serif}.lesson{width:min(100%,520px);padding:36px;background:#fffefa;border:1px solid #dedfd4;border-top:3px solid #e68163}.eyebrow{margin:0 0 12px;color:#315f4b;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}h1{margin:0;font:500 34px/1.15 Georgia,serif}p:last-child{margin:14px 0 0;color:#69756e;font-size:13px;line-height:1.65}</style><main class="lesson"><p class="eyebrow">Reference lesson · ${file.toLowerCase().endsWith(".doc") ? "Document" : "JavaScript topic"}</p><h1>${title}</h1><p>This lesson is part of the JavaScript and DOM unit. Source files are kept out of the portfolio preview.</p></main></html>`;
+      }
       frame.title = `${getTitle(file)} rendered preview`;
       openLink.href = encodeURI(path);
-      openLink.hidden = false;
+      openLink.hidden = !isPage;
       placeholder.hidden = true;
       renderLessons();
     }
 
-    document.querySelector("#total-count").textContent = weeks.reduce((total, week) => total + week.files.length, 0);
-    document.querySelector(".total").setAttribute("aria-label", `${document.querySelector("#total-count").textContent} lessons across 3 populated weeks`);
+    const lessonTotal = weeks.reduce((total, week) => total + week.files.length, 0);
+    const populatedWeeks = weeks.filter((week) => week.files.length > 0).length;
+    document.querySelector("#total-count").textContent = lessonTotal;
+    document.querySelector("#total-label").textContent = `lessons · ${populatedWeeks} weeks`;
+    document.querySelector(".total").setAttribute("aria-label", `${lessonTotal} lessons across ${populatedWeeks} weeks`);
     search.addEventListener("input", renderLessons);
     renderWeeks();
     renderLessons();
