@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Color Palette</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- html2canvas library for PNG export bonus -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <h1>Interactive Color Palette</h1>
+
+  <!-- Controls for adding colors & exporting -->
+  <div class="controls">
+    <input type="text" id="colorInput" placeholder="e.g. #FF5733 or blue" />
+    <button id="addColorBtn">Add Color</button>
+    <button id="exportBtn">Export Palette as PNG</button>
+  </div>
+
+  <!-- Container for color boxes -->
+  <div id="palette" class="palette-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
